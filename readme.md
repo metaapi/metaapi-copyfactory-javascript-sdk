@@ -138,19 +138,42 @@ await configurationApi.updateSubscriber(slaveMetaapiAccount.id, {
     }
   ]
 });
-
-// retrieve list of strategies
-console.log(await configurationApi.getStrategies())
-
-// retrieve list of provider portfolios
-console.log(await configurationApi.getPortfolioStrategies())
-
-// retrieve list of subscribers
-console.log(await configurationApi.getSubscribers())
-
 ```
 
 See esdoc in-code documentation for full definition of possible configuration options.
+
+### Retrieving paginated lists
+
+There are two groups of methods to retrieve paginated lists:
+- with pagination in infinite scroll style
+- with pagination in a classic style which allows you to calculate page count
+
+They are applied to following entities:
+- strategies: `getStrategiesWithInfiniteScrollPagination` and `getStrategiesWithClassicPagination`
+- provider portfolios: `getPortfolioStrategiesWithInfiniteScrollPagination` and `getPortfolioStrategiesWithClassicPagination`
+- subscribers: `getSubscribersWithInfiniteScrollPagination` and `getSubscribersWithClassicPagination`
+
+Example of retrieving strategies with pagination in infinite scroll style:
+```javascript
+// paginate strategies, see esdoc for full list of filter options available
+const strategies = await api.metatraderAccountApi.getStrategiesWithInfiniteScrollPagination({limit: 10, offset: 0});
+
+// get strategies without filter (returns 1000 strategies max)
+const strategies = await api.metatraderAccountApi.getStrategiesWithInfiniteScrollPagination();
+const strategy = strategies.find(strategy => strategy._id === 'strategyId');
+```
+
+Example of retrieving strategies with paginiation in classic style:
+```javascript
+// paginate strategies, see esdoc for full list of filter options available
+const strategies = await api.metatraderAccountApi.getStrategiesWithClassicPagination({limit: 10, offset: 0});
+const strategy = strategies.items.find(strategy => strategy._id === 'strategyId');
+// number of all strategies matching filter without pagination options
+console.log(strategies.count);
+
+// get strategies without filter (returns 1000 strategies max)
+const strategies = await api.metatraderAccountApi.getStrategiesWithClassicPagination();
+```
 
 ## Retrieving trade copying history
 
