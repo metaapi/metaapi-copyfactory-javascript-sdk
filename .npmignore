@@ -10,7 +10,7 @@ package-lock.json
 .nvmrc
 .metaapi
 test.log
-lib
+#lib
 swc
 development.md
 .gitlab-ci.yml
