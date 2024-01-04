@@ -16,13 +16,13 @@ const copyFactory = new CopyFactory(token);
 async function configureCopyFactory() {
   try {
     let masterMetaapiAccount = await api.metatraderAccountApi.getAccount(masterAccountId);
-    if(!masterMetaapiAccount.copyFactoryRoles || !masterMetaapiAccount.copyFactoryRoles.includes('PROVIDER')) {
+    if (!masterMetaapiAccount.copyFactoryRoles || !masterMetaapiAccount.copyFactoryRoles.includes('PROVIDER')) {
       throw new Error('Please specify PROVIDER copyFactoryRoles value in your MetaApi account in ' +
         'order to use it in CopyFactory API');
     }
 
     let slaveMetaapiAccount = await api.metatraderAccountApi.getAccount(slaveAccountId);
-    if(!slaveMetaapiAccount.copyFactoryRoles || !slaveMetaapiAccount.copyFactoryRoles.includes('SUBSCRIBER')) {
+    if (!slaveMetaapiAccount.copyFactoryRoles || !slaveMetaapiAccount.copyFactoryRoles.includes('SUBSCRIBER')) {
       throw new Error('Please specify SUBSCRIBER copyFactoryRoles value in your MetaApi account in ' +
         'order to use it in CopyFactory API');
     }
@@ -31,7 +31,7 @@ async function configureCopyFactory() {
     const strategies = await configurationApi.getStrategiesWithInfiniteScrollPagination();
     const strategy = strategies.find(s => s.accountId === masterMetaapiAccount.id);
     let strategyId;
-    if(strategy) {
+    if (strategy) {
       strategyId = strategy._id;
     } else {
       strategyId = await configurationApi.generateStrategyId();
