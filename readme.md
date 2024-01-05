@@ -97,7 +97,7 @@ import MetaApi, {CopyFactory} from 'metaapi.cloud-sdk';
 
 const token = '...';
 const metaapi = new MetaApi(token);
-const copyFactory = new CopyFactory(token);
+const copyfactory = new CopyFactory(token);
 
 // retrieve MetaApi MetaTrader accounts with CopyFactory as application field value
 // master account must have PROVIDER value in copyFactoryRoles
@@ -113,7 +113,7 @@ if(!slaveMetaapiAccount.copyFactoryRoles || !slaveMetaapiAccount.copyFactoryRole
     'order to use it in CopyFactory API');
 }
 
-let configurationApi = copyFactory.configurationApi;
+let configurationApi = copyfactory.configurationApi;
 
 // create a strategy being copied
 let strategyId = await configurationApi.generateStrategyId();
@@ -181,7 +181,7 @@ CopyFactory allows you to monitor transactions conducted on trading accounts in 
 
 ### Retrieving trading history on provider side
 ```javascript
-let historyApi = copyFactory.historyApi;
+let historyApi = copyfactory.historyApi;
 
 // retrieve trading history, please note that this method support pagination and limits number of records
 console.log(await historyApi.getProvidedTransactions(new Date('2020-08-01'), new Date('2020-09-01')));
@@ -189,7 +189,7 @@ console.log(await historyApi.getProvidedTransactions(new Date('2020-08-01'), new
 
 ### Retrieving trading history on subscriber side
 ```javascript
-let historyApi = copyFactory.historyApi;
+let historyApi = copyfactory.historyApi;
 
 // retrieve trading history, please note that this method support pagination and limits number of records
 console.log(await historyApi.getSubscriptionTransactions(new Date('2020-08-01'), new Date('2020-09-01')));
@@ -204,10 +204,10 @@ closed manually on a slave account will also be reopened during resynchronizatio
 let accountId = '...'; // CopyFactory account id
 
 // resynchronize all strategies
-await copyFactory.tradingApi.resynchronize(accountId);
+await copyfactory.tradingApi.resynchronize(accountId);
 
 // resynchronize specific strategy
-await copyFactory.tradingApi.resynchronize(accountId, ['ABCD']);
+await copyfactory.tradingApi.resynchronize(accountId, ['ABCD']);
 ```
 
 ## Sending external trading signals to a strategy
@@ -215,7 +215,7 @@ You can submit external trading signals to your trading strategy.
 
 ```javascript
 const accountId = '...';
-const tradingApi = copyFactory.tradingApi;
+const tradingApi = copyfactory.tradingApi;
 const signalId = '...';
 
 // get signal client
@@ -251,7 +251,7 @@ console.log(await signalClient.getTradingSignals());
 ## Managing stopouts
 A subscription to a strategy can be stopped if the strategy have exceeded allowed risk limit.
 ```javascript
-let tradingApi = copyFactory.tradingApi;
+let tradingApi = copyfactory.tradingApi;
 let accountId = '...'; // CopyFactory account id
 let strategyId = '...'; // CopyFactory strategy id
 
@@ -267,7 +267,7 @@ You can subscribe to a stream of stopout events using the stopout listener.
 ```javascript
 import {StopoutListener} from 'metaapi.cloud-sdk';
 
-let tradingApi = copyFactory.tradingApi;
+let tradingApi = copyfactory.tradingApi;
 
 // create a custom class based on the StopoutListener
 class Listener extends StopoutListener {
@@ -294,7 +294,7 @@ tradingApi.removeStopoutListener(listenerId);
 
 ## Retrieving slave trading logs
 ```javascript
-let tradingApi = copyFactory.tradingApi;
+let tradingApi = copyfactory.tradingApi;
 let accountId = '...'; // CopyFactory account id
 
 // retrieve slave trading log
@@ -311,7 +311,7 @@ You can subscribe to a stream of strategy or subscriber log events using the use
 ```javascript
 import {UserLogListener} from 'metaapi.cloud-sdk';
 
-let tradingApi = copyFactory.tradingApi;
+let tradingApi = copyfactory.tradingApi;
 
 // create a custom class based on the UserLogListener
 class Listener extends UserLogListener {
@@ -340,7 +340,7 @@ tradingApi.removeStrategyLogListener(listenerId);
 ```javascript
 import {UserLogListener} from 'metaapi.cloud-sdk';
 
-let tradingApi = copyFactory.tradingApi;
+let tradingApi = copyfactory.tradingApi;
 
 // create a custom class based on the UserLogListener
 class Listener extends UserLogListener {
@@ -372,7 +372,7 @@ You can subscribe to a stream of strategy or subscriber transaction events using
 ```javascript
 import {TransactionListener} from 'metaapi.cloud-sdk';
 
-let historyApi = copyFactory.historyApi;
+let historyApi = copyfactory.historyApi;
 
 // create a custom class based on the TransactionListener
 class Listener extends TransactionListener {
@@ -401,7 +401,7 @@ historyApi.removeStrategyTransactionListener(listenerId);
 ```javascript
 import {TransactionListener} from 'metaapi.cloud-sdk';
 
-let historyApi = copyFactory.historyApi;
+let historyApi = copyfactory.historyApi;
 
 // create a custom class based on the TransactionListener
 class Listener extends TransactionListener {

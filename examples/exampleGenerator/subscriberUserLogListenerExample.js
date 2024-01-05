@@ -7,7 +7,7 @@ let token = process.env.TOKEN || '<put in your token here>';
 // your subscriber id
 let subscriberId = process.env.SUBSCRIBER_ID || '<put in your subscriber id here>';
 
-const copyFactory = new CopyFactory(token);
+const copyfactory = new CopyFactory(token);
 
 class Listener extends UserLogListener {
 
@@ -25,7 +25,7 @@ async function userLogListenerExample() {
   try {
     const listener = new Listener();
 
-    let tradingApi = copyFactory.tradingApi;
+    let tradingApi = copyfactory.tradingApi;
     const listenerId = tradingApi.addSubscriberLogListener(listener, subscriberId);
     await new Promise(res => setTimeout(res, 300000));
     tradingApi.removeSubscriberLogListener(listenerId);

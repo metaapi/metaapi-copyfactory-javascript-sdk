@@ -17,7 +17,7 @@ let botToken = process.env.TELEGRAM_BOT_TOKEN || '<put in your botToken here>';
 let chatId = process.env.TELEGRAM_CHAT_ID || '<put in your chatId here>';
 
 const api = new MetaApi(token);
-const copyFactory = new CopyFactory(token);
+const copyfactory = new CopyFactory(token);
 
 async function telegramExample() {
   try {
@@ -27,7 +27,7 @@ async function telegramExample() {
         'order to use it in CopyFactory API');
     }
 
-    let configurationApi = copyFactory.configurationApi;
+    let configurationApi = copyfactory.configurationApi;
     const strategies = await configurationApi.getStrategiesWithInfiniteScrollPagination();
     const strategy = strategies.find(s => s.accountId === masterMetaapiAccount.id);
     let strategyId;
@@ -53,7 +53,7 @@ async function telegramExample() {
     });
 
     // send external signal
-    const tradingApi = copyFactory.tradingApi;
+    const tradingApi = copyfactory.tradingApi;
     const signalClient = await tradingApi.getSignalClient(masterMetaapiAccount.id);
     const signalId = signalClient.generateSignalId();
     await signalClient.updateExternalSignal(strategyId, signalId, {

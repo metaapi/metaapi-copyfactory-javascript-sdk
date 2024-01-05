@@ -7,7 +7,7 @@ let token = process.env.TOKEN || '<put in your token here>';
 // your subscriber id
 let subscriberId = process.env.SUBSCRIBER_ID || '<put in your subscriber id here>';
 
-const copyFactory = new CopyFactory(token);
+const copyfactory = new CopyFactory(token);
 
 class Listener extends TransactionListener {
 
@@ -25,7 +25,7 @@ async function transactionListenerExample() {
   try {
     const listener = new Listener();
 
-    let historyApi = copyFactory.historyApi;
+    let historyApi = copyfactory.historyApi;
     const listenerId = historyApi.addSubscriberTransactionListener(listener, subscriberId);
     await new Promise(res => setTimeout(res, 300000));
     historyApi.removeSubscriberTransactionListener(listenerId);

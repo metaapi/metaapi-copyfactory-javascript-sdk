@@ -11,7 +11,7 @@ let masterAccountId = process.env.MASTER_ACCOUNT_ID || '<put in your masterAccou
 let slaveAccountId = process.env.SLAVE_ACCOUNT_ID || '<put in your slaveAccountId here>';
 
 const api = new MetaApi(token);
-const copyFactory = new CopyFactory(token);
+const copyfactory = new CopyFactory(token);
 
 async function externalSignal() {
   try {
@@ -27,7 +27,7 @@ async function externalSignal() {
         'order to use it in CopyFactory API');
     }
 
-    let configurationApi = copyFactory.configurationApi;
+    let configurationApi = copyfactory.configurationApi;
     const strategies = await configurationApi.getStrategiesWithInfiniteScrollPagination();
     const strategy = strategies.find(s => s.accountId === masterMetaapiAccount.id);
     let strategyId;
@@ -57,7 +57,7 @@ async function externalSignal() {
     });
 
     // send external signal
-    const tradingApi = copyFactory.tradingApi;
+    const tradingApi = copyfactory.tradingApi;
     const signalClient = await tradingApi.getSignalClient(slaveMetaapiAccount.id);
     const signalId = signalClient.generateSignalId();
     await signalClient.updateExternalSignal(strategyId, signalId, {

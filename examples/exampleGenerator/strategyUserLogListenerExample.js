@@ -7,7 +7,7 @@ let token = process.env.TOKEN || '<put in your token here>';
 // your strategy id
 let strategyId = process.env.STRATEGY_ID || '<put in your strategy id here>';
 
-const copyFactory = new CopyFactory(token);
+const copyfactory = new CopyFactory(token);
 
 class Listener extends UserLogListener {
 
@@ -25,7 +25,7 @@ async function userLogListenerExample() {
   try {
     const listener = new Listener();
 
-    let tradingApi = copyFactory.tradingApi;
+    let tradingApi = copyfactory.tradingApi;
     const listenerId = tradingApi.addStrategyLogListener(listener, strategyId);
     await new Promise(res => setTimeout(res, 300000));
     tradingApi.removeStrategyLogListener(listenerId);
