@@ -6,6 +6,6 @@ __Links to examples:__
 
 - [Node.JS](https://github.com/metaapi/metaapi-javascript-sdk/tree/master/examples/node/copyfactory)
 - [Browser](https://github.com/metaapi/metaapi-javascript-sdk/tree/master/examples/browser/copyfactory)
-- [Angular](https://github.com/metaapi/metaapi-javascript-sdk/tree/master/examples/angular/app/copyfactory)
-- [React](https://github.com/metaapi/metaapi-javascript-sdk/tree/master/examples/react/app/copyfactory)
-- [Vue](https://github.com/metaapi/metaapi-javascript-sdk/tree/master/examples/vue/app/copyfactory)
+- [Angular](https://github.com/metaapi/metaapi-javascript-sdk/tree/master/examples/angular/app/src/app/copyfactory)
+- [React](https://github.com/metaapi/metaapi-javascript-sdk/tree/master/examples/react/app/src/components/copyfactory)
+- [Vue](https://github.com/metaapi/metaapi-javascript-sdk/tree/master/examples/vue/app/src/components/copyfactory)

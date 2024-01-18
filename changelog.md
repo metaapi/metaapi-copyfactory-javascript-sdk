@@ -1,3 +1,6 @@
+9.0.1
+  - update docs links
+
 9.0.0
   - increment version for synchronization with Python SDK
 

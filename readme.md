@@ -73,7 +73,7 @@ npm install --save metaapi.cloud-sdk
 
 ## Installing SDK in browser HTML applications
 ```html
-<script src="unpkg.com/metaapi.cloud-sdk/index.js"></script>
+<script src="unpkg.com/metaapi.cloud-sdk"></script>
 <script>
     const token = '...';
     const api = new CopyFactory(token);
@@ -434,5 +434,5 @@ Some of the APIs you might decide to use together with MetaStats API are:
 1. MetaApi cloud forex API [https://metaapi.cloud/docs/client/](https://metaapi.cloud/docs/client/)
 2. MetaTrader account management API [https://metaapi.cloud/docs/provisioning/](https://metaapi.cloud/docs/provisioning/)
 3. MetaStats forex trading metrics API [https://metaapi.cloud/docs/metastats/](https://metaapi.cloud/docs/metastats/)
-4. MetaApi MT manager API [https://metaapi.cloud/docs/manager/](https://metaapi.cloud/docs/manager/>)
-5. MetaApi risk management API [https://metaapi.cloud/docs/risk-management/](https://metaapi.cloud/docs/risk-management/>)
+4. MetaApi MT manager API [https://metaapi.cloud/docs/manager/](https://metaapi.cloud/docs/manager/)
+5. MetaApi risk management API [https://metaapi.cloud/docs/risk-management/](https://metaapi.cloud/docs/risk-management/)
