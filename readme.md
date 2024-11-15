@@ -219,10 +219,10 @@ const tradingApi = copyfactory.tradingApi;
 const signalId = '...';
 
 // get signal client
-const signalClient = await tradingApi.getSignalClient(accountId);
+const strategySignalClient = await tradingApi.getStrategySignalClient(strategyId);
 
 // add trading signal
-await signalClient.updateExternalSignal(strategyId, signalId, {
+await strategySignalClient.updateExternalSignal(signalId, {
   symbol: 'EURUSD',
   type: 'POSITION_TYPE_BUY',
   time: new Date(),
@@ -233,7 +233,7 @@ await signalClient.updateExternalSignal(strategyId, signalId, {
 console.log(await signalClient.getStrategyExternalSignals(strategyId));
 
 // remove signal
-await signalClient.removeExternalSignal(strategyId, signalId, {
+await strategySignalClient.removeExternalSignal(signalId, {
   time: new Date()
 });
 ```
@@ -242,10 +242,10 @@ await signalClient.removeExternalSignal(strategyId, signalId, {
 
 ```javascript
 const accountId = '...';
-const signalClient = await tradingApi.getSignalClient(accountId);
+const subscriberSignalClient = await tradingApi.getSubscriberSignalClient(accountId);
 
 // retrieve trading signals
-console.log(await signalClient.getTradingSignals());
+console.log(await subscriberSignalClient.getTradingSignals());
 ```
 
 ## Managing stopouts

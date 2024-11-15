@@ -1,3 +1,9 @@
+11.0.0
+  - increment version for synchronization with Python SDK
+
+10.0.0
+  - breaking change: separated provider and strategy related signal clients
+
 9.0.1
   - update docs links
 
