@@ -1,3 +1,7 @@
+11.0.1
+  - add type check to CI
+  - fix types
+
 11.0.0
   - increment version for synchronization with Python SDK
 
