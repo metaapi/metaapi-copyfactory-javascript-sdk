@@ -4,7 +4,7 @@ let StopoutListener = require('metaapi.cloud-sdk').StopoutListener;
 // your MetaApi API token
 let token = process.env.TOKEN || '<put in your token here>';
 // your subscriber MetaApi account id
-let accountId = process.env.SLAVE_ACCOUNT_ID || '<put in your slaveAccountId here>';
+let accountId = process.env.SUBSCRIBER_ACCOUNT_ID || '<put in your subscriberAccountId here>';
 
 const copyfactory = new CopyFactory(token);
 

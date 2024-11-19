@@ -3,33 +3,34 @@ let CopyFactory = require('metaapi.cloud-sdk').CopyFactory;
 
 // your MetaApi API token
 let token = process.env.TOKEN || '<put in your token here>';
-// your master MetaApi account id
-// master account must have PROVIDER value in copyFactoryRoles
-let masterAccountId = process.env.MASTER_ACCOUNT_ID || '<put in your masterAccountId here>';
-// your slave MetaApi account id
-// slave account must have SUBSCRIBER value in copyFactoryRoles
-let slaveAccountId = process.env.SLAVE_ACCOUNT_ID || '<put in your slaveAccountId here>';
+// your provider MetaApi account id
+// provider account must have PROVIDER value in copyFactoryRoles
+let providerAccountId = process.env.PROVIDER_ACCOUNT_ID || '<put in your providerAccountId here>';
+// your subscriber MetaApi account id
+// subscriber account must have SUBSCRIBER value in copyFactoryRoles
+let subscriberAccountId = process.env.SUBSCRIBER_ACCOUNT_ID || '<put in your subscriberAccountId here>';
 
 const api = new MetaApi(token);
 const copyfactory = new CopyFactory(token);
 
 async function configureCopyFactory() {
   try {
-    let masterMetaapiAccount = await api.metatraderAccountApi.getAccount(masterAccountId);
-    if (!masterMetaapiAccount.copyFactoryRoles || !masterMetaapiAccount.copyFactoryRoles.includes('PROVIDER')) {
+    let providerMetaapiAccount = await api.metatraderAccountApi.getAccount(providerAccountId);
+    if (!providerMetaapiAccount.copyFactoryRoles || !providerMetaapiAccount.copyFactoryRoles.includes('PROVIDER')) {
       throw new Error('Please specify PROVIDER copyFactoryRoles value in your MetaApi account in ' +
         'order to use it in CopyFactory API');
     }
 
-    let slaveMetaapiAccount = await api.metatraderAccountApi.getAccount(slaveAccountId);
-    if (!slaveMetaapiAccount.copyFactoryRoles || !slaveMetaapiAccount.copyFactoryRoles.includes('SUBSCRIBER')) {
+    let subscriberMetaapiAccount = await api.metatraderAccountApi.getAccount(subscriberAccountId);
+    if (!subscriberMetaapiAccount.copyFactoryRoles ||
+      !subscriberMetaapiAccount.copyFactoryRoles.includes('SUBSCRIBER')) {
       throw new Error('Please specify SUBSCRIBER copyFactoryRoles value in your MetaApi account in ' +
         'order to use it in CopyFactory API');
     }
 
     let configurationApi = copyfactory.configurationApi;
     const strategies = await configurationApi.getStrategiesWithInfiniteScrollPagination();
-    const strategy = strategies.find(s => s.accountId === masterMetaapiAccount.id);
+    const strategy = strategies.find(s => s.accountId === providerMetaapiAccount.id);
     let strategyId;
     if (strategy) {
       strategyId = strategy._id;
@@ -42,11 +43,11 @@ async function configureCopyFactory() {
     await configurationApi.updateStrategy(strategyId, {
       name: 'Test strategy',
       description: 'Some useful description about your strategy',
-      accountId: masterMetaapiAccount.id
+      accountId: providerMetaapiAccount.id
     });
 
     // create subscriber
-    await configurationApi.updateSubscriber(slaveMetaapiAccount.id, {
+    await configurationApi.updateSubscriber(subscriberMetaapiAccount.id, {
       name: 'Test subscriber',
       subscriptions: [
         {

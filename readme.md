@@ -88,9 +88,9 @@ Please visit [https://app.metaapi.cloud/token](https://app.metaapi.cloud/token) 
 In order to configure trade copying you need to:
 
 - add MetaApi MetaTrader accounts with CopyFactory as application field value (see above)
-- create CopyFactory master and slave accounts and connect them to MetaApi accounts via connectionId field
+- create CopyFactory provider and subscriber accounts and connect them to MetaApi accounts via connectionId field
 - create a strategy being copied
-- subscribe slave CopyFactory accounts to the strategy
+- subscribe subscriber CopyFactory accounts to the strategy
 
 ```javascript
 import MetaApi, {CopyFactory} from 'metaapi.cloud-sdk';
@@ -100,15 +100,15 @@ const metaapi = new MetaApi(token);
 const copyfactory = new CopyFactory(token);
 
 // retrieve MetaApi MetaTrader accounts with CopyFactory as application field value
-// master account must have PROVIDER value in copyFactoryRoles
-const masterMetaapiAccount = await api.metatraderAccountApi.getAccount('masterMetaapiAccountId');
-if(!masterMetaapiAccount.copyFactoryRoles || !masterMetaapiAccount.copyFactoryRoles.includes('PROVIDER')) {
+// provider account must have PROVIDER value in copyFactoryRoles
+const providerMetaapiAccount = await api.metatraderAccountApi.getAccount('providerMetaapiAccountId');
+if(!providerMetaapiAccount.copyFactoryRoles || !providerMetaapiAccount.copyFactoryRoles.includes('PROVIDER')) {
   throw new Error('Please specify PROVIDER copyFactoryRoles value in your MetaApi account in ' +
     'order to use it in CopyFactory API');
 }
-// slave account must have SUBSCRIBER value in copyFactoryRoles
-const slaveMetaapiAccount = await api.metatraderAccountApi.getAccount('slaveMetaapiAccountId');
-if(!slaveMetaapiAccount.copyFactoryRoles || !slaveMetaapiAccount.copyFactoryRoles.includes('SUBSCRIBER')) {
+// subscriber account must have SUBSCRIBER value in copyFactoryRoles
+const subscriberMetaapiAccount = await api.metatraderAccountApi.getAccount('subscriberMetaapiAccountId');
+if(!subscriberMetaapiAccount.copyFactoryRoles || !subscriberMetaapiAccount.copyFactoryRoles.includes('SUBSCRIBER')) {
   throw new Error('Please specify SUBSCRIBER copyFactoryRoles value in your MetaApi account in ' +
     'order to use it in CopyFactory API');
 }
@@ -120,7 +120,7 @@ let strategyId = await configurationApi.generateStrategyId();
 await configurationApi.updateStrategy(strategyId.id, {
   name: 'Test strategy',
   description: 'Some useful description about your strategy',
-  accountId: masterMetaapiAccount.id,
+  accountId: providerMetaapiAccount.id,
   maxTradeRisk: 0.1,
   timeSettings: {
     lifetimeInHours: 192,
@@ -128,8 +128,8 @@ await configurationApi.updateStrategy(strategyId.id, {
   }
 });
 
-// subscribe slave CopyFactory accounts to the strategy
-await configurationApi.updateSubscriber(slaveMetaapiAccount.id, {
+// subscribe subscriber CopyFactory accounts to the strategy
+await configurationApi.updateSubscriber(subscriberMetaapiAccount.id, {
   name: 'Demo account',
   subscriptions: [
     {
@@ -195,10 +195,10 @@ let historyApi = copyfactory.historyApi;
 console.log(await historyApi.getSubscriptionTransactions(new Date('2020-08-01'), new Date('2020-09-01')));
 ```
 
-## Resynchronizing slave accounts to masters
+## Resynchronizing subscriber accounts to providers
 There is a configurable time limit during which the trades can be opened. Sometimes trades can not open in time due to broker errors or trading session time discrepancy.
-You can resynchronize a slave account to place such late trades. Please note that positions which were
-closed manually on a slave account will also be reopened during resynchronization.
+You can resynchronize a subscriber account to place such late trades. Please note that positions which were
+closed manually on a subscriber account will also be reopened during resynchronization.
 
 ```javascript
 let accountId = '...'; // CopyFactory account id
@@ -292,15 +292,15 @@ const listenerId = tradingApi.addStopoutListener(listener);
 tradingApi.removeStopoutListener(listenerId);
 ```
 
-## Retrieving slave trading logs
+## Retrieving subscriber trading logs
 ```javascript
 let tradingApi = copyfactory.tradingApi;
 let accountId = '...'; // CopyFactory account id
 
-// retrieve slave trading log
+// retrieve subscriber trading log
 console.log(await tradingApi.getUserLog(accountId));
 
-// retrieve paginated slave trading log by time range
+// retrieve paginated subscriber trading log by time range
 console.log(await tradingApi.getUserLog(accountId, new Date(Date.now() - 24 * 60 * 60 * 1000), undefined, 20, 10));
 ```
 

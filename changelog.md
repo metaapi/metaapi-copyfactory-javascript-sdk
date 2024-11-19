@@ -1,3 +1,6 @@
+11.0.2
+  - fix terminology
+
 11.0.1
   - add type check to CI
   - fix types
