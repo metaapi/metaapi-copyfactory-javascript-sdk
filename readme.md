@@ -43,6 +43,7 @@ Features supported:
 - monitor trading history
 - calculate trade copying commissions for account managers
 - support portfolio strategies as trading signal source, i.e. the strategies which include signals of several other strategies (also known as combos on some platforms)
+- webhooks for external systems to create trading signals on strategies
 
 Please note that trade copying to MT5 netting accounts is not supported in the current API version
 
@@ -424,6 +425,28 @@ const listenerId = historyApi.addSubscriberTransactionListener(listener, 'accoun
 
 // remove listener
 historyApi.removeSubscriberTransactionListener(listenerId);
+```
+
+## Webhooks
+
+Webhooks can be created on specific strategies and their URLs can be provided to external systems to create external trading signals. The URL contains a secret webhook ID, so no extra authorization is required on a REST API invocation to a webhook.
+
+```javascript
+const strategyId = '...';
+
+let webhook = await copyfactory.configurationApi.createWebhook(strategyId);
+let url = webhook.url;
+```
+
+For example, if `webhook.url` is `https://copyfactory-api-v1.london.agiliumtrade.ai/webhooks/yMLd8aviewgFfS4NBxZETkoVPbWAJ92t` then a request can be sent to it to create an external signal:
+
+```bash
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
+  "symbol": "EURUSD",
+  "type": "POSITION_TYPE_BUY",
+  "time": "2024-12-19T06:52:19.679Z",
+  "volume": 0.1
+}' 'https://copyfactory-api-v1.london.agiliumtrade.ai/webhooks/yMLd8aviewgFfS4NBxZETkoVPbWAJ92t'
 ```
 
 ## Related projects:
